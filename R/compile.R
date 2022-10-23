@@ -127,6 +127,9 @@ ashe_add_descriptions <- function(ashe) {
   # coding_sic07[, .N, by = sic07][order(N)]
 
   cli::cli_alert_info("Merging coding frame descriptions")
+  
+  # TODO: Rewrite using dt[dt2, x := i.y] syntax
+  # use if_exists as below too maybe??
 
   if("occ00" %in% names(ashe)) {
   ashe <- merge(ashe, coding_soc00, all.x = TRUE, by.x = "occ00", by.y = "SOC")
@@ -227,16 +230,15 @@ ashe_compile <- function(ashe_folder,
   duplication_check_variables <- duplication_check_variables[duplication_check_variables %in% names(ashe)]
 
 
+  # Remove duplicate rows - might not be necessary but the way
+  # the files arrive means it's useful
   ashe <- unique(ashe, by = duplication_check_variables)
-
-  package_file_path <- system.file(package = "tidyashe")
-
-  cli::cli_alert_info("Saving as fst")
-
-  save_name <- paste0("ashe_data.fst")
 
    # If enabled
   if (save_to_folder == TRUE) {
+
+  cli::cli_alert_info("Saving as fst")
+  save_name <- paste0("ashe_data.fst")
 
   # If DATA_DIRECTORY environment variable is present, save there.
   if (Sys.getenv("DATA_DIRECTORY") != "") {
@@ -285,7 +287,7 @@ ashe_load <- function(set_key = 1, as.data.table = TRUE, ...) {
     ...
   )
 
-  if(set_key == 1) { setkey(ashe, year, piden) }
+  if(set_key == 1){setkey(ashe, year, piden)}
 
   setcolorder(ashe, c("year", "piden"))
 

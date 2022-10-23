@@ -43,11 +43,7 @@ ashe_convert(folder = "ashe_sav_data/",
              new_folder = "ashe_fst_data/")
 
 # Compile all fst's to a single fst
-ashe_compile("ashe_fst_data/")
-
-# Load data into environment
-ashe <- ashe_load()
-
+ashe <- ashe_compile("ashe_fst_data/")
 ```
 
 To read in limited number of columns use `select_columns`:
@@ -64,4 +60,3 @@ ashe_convert(folder = "ashe_sav_data/",
 
 ashe_compile("ashe_fst_data/")
 ```
-

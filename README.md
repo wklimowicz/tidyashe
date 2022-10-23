@@ -33,16 +33,12 @@ ashe_convert(folder = "ashe_sav_data/",
              new_folder = "ashe_fst_data/")
 
 # Compile all fst's to a single fst
-ashe_compile("ashe_fst_data/")
-
-# Load data into environment
-ashe <- ashe_load()
+ashe <- ashe_compile("ashe_fst_data/")
 ```
 
 To read in limited number of columns use `select_columns`:
 
 ``` r
-
 keep_columns <- c("year", "piden", "thrs", "age",
                   "ft", "sex", "gpay", "sic07",
                   "sic03", "occ00", "occ10")
