@@ -58,5 +58,5 @@ ashe_convert(folder = "ashe_sav_data/",
              new_folder = "ashe_fst_data/",
              select_columns = keep_columns)
 
-ashe_compile("ashe_fst_data/")
+ashe <- ashe_compile("ashe_fst_data/")
 ```
