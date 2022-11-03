@@ -9,7 +9,7 @@
 [![R-CMD-check](https://github.com/wklimowicz/tidyashe/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/wklimowicz/tidyashe/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
-Note: this currently only works for ASHE files as they exist in DfE, and
+Note: this has only been tested on ASHE files as they exist in DfE, and
 may not work for ASHE `sav` files held elsewhere.
 
 Combines and adds mappings to ASHE dataset.
