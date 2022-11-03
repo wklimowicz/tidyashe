@@ -41,14 +41,15 @@ ashe_convert <- function(folder,
 
   files_in_directory <- list.files(folder)
 
-  if (length(files_in_directory) == 0) {
-    cli::cli_alert_danger("No Files Found")
-    invokeRestart("abort")
-  }
 
   dir.create(file.path(new_folder), showWarnings = FALSE)
 
   files <- list.files(folder)
+
+  if (length(files_in_directory) == 0) {
+    cli::cli_alert_danger("No Files Found")
+    invokeRestart("abort")
+  }
 
 
   if (incremental == TRUE) {
@@ -57,9 +58,15 @@ ashe_convert <- function(folder,
    exist_in_input <- tools::file_path_sans_ext(list.files(folder))
    files_in_directory <- setdiff(exist_in_input, exist_in_output)
 
+  if (length(files_in_directory) == 0) {
+    cli::cli_alert_danger("No Files Found")
+    invokeRestart("abort")
+  }
+
    # Reattach extension
    files_in_directory <- paste0(files_in_directory, ".sav")
   }
+
 
   invisible(lapply(files_in_directory, ashe_convert_file,
          new_folder = new_folder,
@@ -208,11 +215,13 @@ convert_to_factor_if_exists <- function(ashe, column) {
 #' 
 #' @param ashe_folder Folder with the ashe fst files
 #' @param select_columns Filter columns which are compiled
+#' @param set_key Set key to YEAR/PIDEN?
 #' @param save_to_folder If TRUE, will save the fst file to the folder indicated by the `DATA_DIRECTORY` environment variable. This will enalbe the `ashe_load()` function.
 #' 
 #' @export
 ashe_compile <- function(ashe_folder,
                          select_columns = NULL,
+                         set_key = TRUE,
                          save_to_folder = FALSE) {
 
   cli::cli_h1("Loading in ASHE datasets")
@@ -266,6 +275,8 @@ ashe_compile <- function(ashe_folder,
   }
 
   setcolorder(ashe, c("year", "piden"))
+
+  if(set_key == 1){setkey(ashe, year, piden)}
 
   return(ashe)
 

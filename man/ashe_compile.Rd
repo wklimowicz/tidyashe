@@ -4,12 +4,19 @@
 \alias{ashe_compile}
 \title{Compile to one file}
 \usage{
-ashe_compile(ashe_folder, select_columns = NULL, save_to_folder = FALSE)
+ashe_compile(
+  ashe_folder,
+  select_columns = NULL,
+  set_key = TRUE,
+  save_to_folder = FALSE
+)
 }
 \arguments{
 \item{ashe_folder}{Folder with the ashe fst files}
 
 \item{select_columns}{Filter columns which are compiled}
+
+\item{set_key}{Set key to YEAR/PIDEN?}
 
 \item{save_to_folder}{If TRUE, will save the fst file to the folder indicated by the \code{DATA_DIRECTORY} environment variable. This will enalbe the \code{ashe_load()} function.}
 }
