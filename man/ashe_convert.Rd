@@ -4,7 +4,7 @@
 \alias{ashe_convert}
 \title{Convert to fst for faster loading}
 \usage{
-ashe_convert(folder, new_folder, select_columns = NULL)
+ashe_convert(folder, new_folder, select_columns = NULL, incremental = TRUE)
 }
 \arguments{
 \item{folder}{Folder with ASHE .sav files}
@@ -12,6 +12,8 @@ ashe_convert(folder, new_folder, select_columns = NULL)
 \item{new_folder}{Name of new folder for files to be converted to}
 
 \item{select_columns}{Vector of columns to limit conversion}
+
+\item{incremental}{Only convert files which don't exist in output directory}
 }
 \description{
 Convert to fst for faster loading
