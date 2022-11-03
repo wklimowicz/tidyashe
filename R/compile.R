@@ -29,11 +29,13 @@ ashe_convert_file <- function(ashe, new_folder, folder, select_columns) {
 #' @param folder Folder with ASHE .sav files
 #' @param new_folder Name of new folder for files to be converted to
 #' @param select_columns Vector of columns to limit conversion
+#' @param incremental Only convert files which don't exist in output directory
 #'
 #' @export
 ashe_convert <- function(folder,
-                                new_folder,
-                                select_columns = NULL) {
+                          new_folder,
+                          select_columns = NULL,
+                          incremental = TRUE) {
 
   cli::cli_h1(paste0("Converting sav files to fst"))
 
@@ -48,7 +50,18 @@ ashe_convert <- function(folder,
 
   files <- list.files(folder)
 
-  invisible(lapply(files, ashe_convert_file,
+
+  if (incremental == TRUE) {
+    # Check what files exist and diff
+   exist_in_output <- tools::file_path_sans_ext(list.files(new_folder))
+   exist_in_input <- tools::file_path_sans_ext(list.files(folder))
+   files_in_directory <- setdiff(exist_in_input, exist_in_output)
+
+   # Reattach extension
+   files_in_directory <- paste0(files_in_directory, ".sav")
+  }
+
+  invisible(lapply(files_in_directory, ashe_convert_file,
          new_folder = new_folder,
          folder = folder,
          select_columns = select_columns))
