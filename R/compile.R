@@ -129,6 +129,11 @@ ashe_add_descriptions <- function(ashe) {
                                            "/",
                                            "occ10_coding.csv"),
                                   colClasses = c("numeric", "character"))
+
+  coding_soc20 <- data.table::fread(paste0(coding_frames_path,
+                                           "/",
+                                           "occ20_coding.csv"),
+                                  colClasses = c("numeric", "character"))
                                               
 
   coding_sic07 <- data.table::fread(paste0(coding_frames_path,
@@ -161,6 +166,11 @@ ashe_add_descriptions <- function(ashe) {
   } else {
     ashe[, OCCUPATION10_DESCRIPTION := NA_character_]
   }
+  if("occ20" %in% names(ashe)) {
+  ashe <- merge(ashe, coding_soc20, all.x = TRUE, by.x = "occ20", by.y = "SOC")
+  } else {
+    ashe[, OCCUPATION20_DESCRIPTION := NA_character_]
+  }
 
   if("sic03" %in% names(ashe)) {
   ashe <- merge(ashe, coding_sic03, all.x = TRUE, by.x = "sic03", by.y = "sic03")
@@ -175,7 +185,9 @@ ashe_add_descriptions <- function(ashe) {
   }
 
   ashe[, occupation := data.table::fcase(year %in% 1997:2010, OCCUPATION00_DESCRIPTION,
-                                         year %in% 2011:2021, OCCUPATION10_DESCRIPTION)]
+                                         year %in% 2011:2020, OCCUPATION10_DESCRIPTION,
+                                         year %in% 2021:2030, OCCUPATION20_DESCRIPTION
+                                         )]
 
   ashe[, industry := data.table::fcase(year %in% 1997:2008, SIC03_DESCRIPTION,
                                          year %in% 2009:2021, SIC07_DESCRIPTION)]
@@ -193,6 +205,7 @@ ashe_add_descriptions <- function(ashe) {
   convert_to_factor_if_exists(ashe, "file")
   convert_to_factor_if_exists(ashe, "occ00")
   convert_to_factor_if_exists(ashe, "occ10")
+  convert_to_factor_if_exists(ashe, "occ20")
   convert_to_factor_if_exists(ashe, "sic07")
   convert_to_factor_if_exists(ashe, "sic03")
   convert_to_factor_if_exists(ashe, "luaref")
