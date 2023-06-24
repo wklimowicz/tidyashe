@@ -259,7 +259,7 @@ ashe_compile <- function(ashe_folder,
 
   # TODO: Check if this makes ASHE align to official publications
   duplication_check_variables <- c("piden", "year", "thrs", "age", "ft", "sex",
-                                   "gpay", "occ00", "occ10")
+                                   "gpay", "occ00", "occ10", "occ20")
 
   # filter out nonexistent
   duplication_check_variables <- duplication_check_variables[duplication_check_variables %in% names(ashe)]
