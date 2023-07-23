@@ -184,13 +184,15 @@ ashe_add_descriptions <- function(ashe) {
     ashe[, SIC07_DESCRIPTION := NA_character_]
   }
 
-  ashe[, occupation := data.table::fcase(year %in% 1997:2010, OCCUPATION00_DESCRIPTION,
-                                         year %in% 2011:2020, OCCUPATION10_DESCRIPTION,
-                                         year %in% 2021:2030, OCCUPATION20_DESCRIPTION
-                                         )]
 
-  ashe[, industry := data.table::fcase(year %in% 1997:2008, SIC03_DESCRIPTION,
-                                         year %in% 2009:2021, SIC07_DESCRIPTION)]
+  ashe[, occupation := data.table::fcoalesce(OCCUPATION00_DESCRIPTION,
+                                             OCCUPATION10_DESCRIPTION,
+                                             OCCUPATION20_DESCRIPTION
+                                             )]
+
+  ashe[, industry := data.table::fcoalesce(SIC03_DESCRIPTION,
+                                             SIC07_DESCRIPTION
+                                             )]
 
   # Remove old occupation descriptions and turn to factor
   ashe[, c("OCCUPATION10_DESCRIPTION",
