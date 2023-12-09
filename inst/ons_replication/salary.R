@@ -75,7 +75,7 @@ return(correct_condition)
 }
 
 
-ashe <- read_fst("../ashe_fst_data/ashe_2019_2020_gb_v18.fst", as.data.table = TRUE)
+ashe <- read_fst("../data_ashe_fst/ashe_2019_2020_gb_v18.fst", as.data.table = TRUE)
 ashe <- ashe[year == 2019]
 # & age %in% c(18:21)
 

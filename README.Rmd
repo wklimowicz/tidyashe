@@ -40,10 +40,10 @@ library(tidyashe)
 
 # Convert all sav's to fst
 ashe_convert(folder = "ashe_sav_data/",
-             new_folder = "ashe_fst_data/")
+             new_folder = "data_ashe_fst/")
 
 # Compile all fst's to a single fst
-ashe <- ashe_compile("ashe_fst_data/")
+ashe <- ashe_compile("data_ashe_fst/")
 ```
 
 To read in limited number of columns use `select_columns`:
@@ -55,8 +55,8 @@ keep_columns <- c("year", "piden", "thrs", "age",
                   "sic03", "occ00", "occ10")
 
 ashe_convert(folder = "ashe_sav_data/",
-             new_folder = "ashe_fst_data/",
+             new_folder = "data_ashe_fst/",
              select_columns = keep_columns)
 
-ashe <- ashe_compile("ashe_fst_data/")
+ashe <- ashe_compile("data_ashe_fst/")
 ```

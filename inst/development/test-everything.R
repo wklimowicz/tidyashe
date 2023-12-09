@@ -12,14 +12,14 @@ setwd(here::here())
 keep_columns <- c("year", "piden", "thrs", "age", "ft", "sex", "gpay", "sic07",
                   "sic03", "occ00", "occ10")
 
-ashe_convert(folder = "../ashe_data/",
-                    new_folder = "../ashe_fst_data")
+ashe_convert(folder = "../data_ashe_raw/",
+                    new_folder = "../data_ashe_fst")
                     # select_columns = keep_columns)
 
 
 # TODO: Add duplicate years argument for generality
 
-ashe <- ashe_compile("../ashe_fst_data",
+ashe <- ashe_compile("../data_ashe_fst",
             # select_columns = keep_columns,
             save_to_folder = TRUE)
 
@@ -32,10 +32,10 @@ prettyunits::pretty_bytes()
 
 # Median salaries
 
-ashe <- fst::read_fst("../ashe_fst_data/ashe_2019_2020_gb_v18.fst",
+ashe <- fst::read_fst("../data_ashe_fst/ashe_2019_2020_gb_v18.fst",
                       as.data.table = TRUE)
 
-ashe <- fst::read_fst("../ashe_fst_data/ashe_1997_2011_gb_vdfe.fst",
+ashe <- fst::read_fst("../data_ashe_fst/ashe_1997_2011_gb_vdfe.fst",
                       as.data.table = TRUE)
 
 ashe[year == 2008 &

@@ -126,7 +126,7 @@ test_data <- structure(list(SEX = structure(0, label = "sexl", format.spss = "F8
     fs::dir_create("test_rds_data"),
     "test/ashe_2011_2017_GB_v12.sav" = haven::write_sav(test_data, "test/ashe_2011_2017_GB_v12.sav"),
     "test/ashe_2018_2019_GB_v12.sav" = haven::write_sav(test_data, "test/ashe_2018_2019_GB_v12.sav"),
-    "ashe_data.fst",
+    "data_ashe_raw.fst",
     "ashe_variables_report.csv"
   ), {
     expect_error(suppressMessages(test_convert_compile()), NA)
