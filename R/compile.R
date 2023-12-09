@@ -275,7 +275,7 @@ ashe_compile <- function(ashe_folder,
   if (save_to_folder == TRUE) {
 
   cli::cli_alert_info("Saving as fst")
-  save_name <- paste0("data_ashe_raw.fst")
+  save_name <- paste0("ashe_data.fst")
 
   # If DATA_DIRECTORY environment variable is present, save there.
   if (Sys.getenv("DATA_DIRECTORY") != "") {
@@ -319,7 +319,7 @@ ashe_load <- function(set_key = 1, as.data.table = TRUE, ...) {
     stop()
   }
 
-  read_name <- "data_ashe_raw.fst"
+  read_name <- "ashe_data.fst"
 
   ashe <- fst::read_fst(paste0(Sys.getenv("DATA_DIRECTORY"), "/", read_name),
     as.data.table = as.data.table,
