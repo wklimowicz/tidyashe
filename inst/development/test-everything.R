@@ -10,7 +10,7 @@ setwd(here::here())
 # Setup ----------
 
 keep_columns <- c("year", "piden", "thrs", "age", "ft", "sex", "gpay", "sic07",
-                  "sic03", "occ00", "occ10")
+                  "sic03", "occ00", "occ10", "httw")
 
 ashe_convert(folder = "../data_ashe_raw/",
                     new_folder = "../data_ashe_fst")
@@ -20,8 +20,17 @@ ashe_convert(folder = "../data_ashe_raw/",
 # TODO: Add duplicate years argument for generality
 
 ashe <- ashe_compile("../data_ashe_fst",
-            # select_columns = keep_columns,
+            select_columns = keep_columns,
             save_to_folder = TRUE)
+
+x <- fst::read_fst(
+  "../data_ashe_fst/ashe_2011_2017_GB_v12.fst",
+  as.data.table = TRUE
+)
+
+x[year == 2012, .N, httw] |> head(100)
+x[httw == 157, .N, year]
+x[httw == "E30000018", mean(gpay), year]
 
 ashe <- ashe_load()
 
