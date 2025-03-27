@@ -76,20 +76,35 @@ ashe_convert <- function(folder,
 }
 
 
-read_ashe_fst <- function(ashe) {
+read_ashe_file <- function(ashe, file_format) {
 
-    cli::cli_alert_info(paste0("Loading ", ashe))
+  cli::cli_alert_info(paste0("Loading ", ashe))
 
-    df <- fst::read_fst(ashe, as.data.table = TRUE)
 
-    return(df)
+  if (file_format == "sav") {
+    df <- haven::read_sav(
+      file_path,
+      encoding = "latin1"
+    ) |>
+      janitor::clean_names() |>
+      data.table::data.table()
   }
+
+  if (file_format == "fst") {
+    df <- fst::read_fst(ashe, as.data.table = TRUE)
+  }
+
+  return(df)
+}
 
 
 ashe_load_data <- function(ashe_files) {
 
+  # Get file format
+  file_format <- tools::file_ext(ashe_files)
+
   # Read in all files in folder
-  files <- lapply(ashe_files, read_ashe_fst)
+  files <- purrr::map2(ashe_files, file_format, read_ashe_file)
 
   # Convert columns which are sometimes numeric and sometimes character
 
