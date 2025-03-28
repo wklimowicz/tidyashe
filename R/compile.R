@@ -261,7 +261,8 @@ ashe_compile <- function(ashe_folder,
   ashe_files <- paste0(ashe_folder, "/", list.files(ashe_folder))
 
   if (!is.null(filter_files)) {
-    ashe_files <- ashe_files[grepl(filter_files, ashe_files)]
+    filter_string <- paste0(filter_files, collapse="|")
+    ashe_files <- ashe_files[grepl(filter_string, ashe_files)]
   }
 
   ashe <- ashe_load_data(ashe_files)
