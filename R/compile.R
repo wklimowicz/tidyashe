@@ -83,7 +83,7 @@ read_ashe_file <- function(ashe, file_format) {
 
   if (file_format == "sav") {
     df <- haven::read_sav(
-      file_path,
+      ashe,
       encoding = "latin1"
     ) |>
       janitor::clean_names() |>
