@@ -117,7 +117,7 @@ ashe_load_data <- function(ashe_files) {
 
     char_num_columns <- char_num_columns[char_num_columns %in% names(dt)]
 
-    dt <- dt[, lapply(.SD, as.character), .SDcols = char_num_columns]
+    dt[, names(.SD) := lapply(.SD, as.character), .SDcols = char_num_columns]
   }
 
   cli::cli_h2("Tidying")
