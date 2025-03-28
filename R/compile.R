@@ -245,18 +245,24 @@ convert_to_factor_if_exists <- function(ashe, column) {
 #' 
 #' @param ashe_folder Folder with the ashe fst files
 #' @param select_columns Filter columns which are compiled
+#' @param filter_files Character vector to filter the file names to take. If NULL, takes all files.
 #' @param set_key Set key to YEAR/PIDEN?
 #' @param save_to_folder If TRUE, will save the fst file to the folder indicated by the `DATA_DIRECTORY` environment variable. This will enalbe the `ashe_load()` function.
 #' 
 #' @export
 ashe_compile <- function(ashe_folder,
                          select_columns = NULL,
+                         filter_files = NULL,
                          set_key = TRUE,
                          save_to_folder = FALSE) {
 
   cli::cli_h1("Loading in ASHE datasets")
 
   ashe_files <- paste0(ashe_folder, "/", list.files(ashe_folder))
+
+  if (!is.null(filter_files)) {
+    ashe_files <- ashe_files[grepl(filter_files, ashe_files)]
+  }
 
   ashe <- ashe_load_data(ashe_files)
 

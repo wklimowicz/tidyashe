@@ -7,6 +7,7 @@
 ashe_compile(
   ashe_folder,
   select_columns = NULL,
+  filter_files = NULL,
   set_key = TRUE,
   save_to_folder = FALSE
 )
@@ -15,6 +16,8 @@ ashe_compile(
 \item{ashe_folder}{Folder with the ashe fst files}
 
 \item{select_columns}{Filter columns which are compiled}
+
+\item{filter_files}{Character vector to filter the file names to take. If NULL, takes all files.}
 
 \item{set_key}{Set key to YEAR/PIDEN?}
 
