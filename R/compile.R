@@ -127,8 +127,12 @@ ashe_load_data <- function(ashe_files) {
 
   names(files) <- basename(ashe_files)
 
-  ashe <- data.table::rbindlist(files, use.names = TRUE, fill = TRUE,
-                    idcol = "file")
+  ashe <- data.table::rbindlist(
+    files,
+    use.names = TRUE,
+    fill = TRUE,
+    idcol = "file"
+  )
 
   return(ashe)
 
@@ -315,13 +319,13 @@ ashe_compile <- function(ashe_folder,
 
   }
 
-  setcolorder(ashe, c("year", "piden"))
+  setcolorder(ashe, c("file", "year", "piden"))
 
-  if(set_key == 1){setkey(ashe, year, piden)}
+  if(set_key == TRUE){
+    setkey(ashe, year, piden)
+  }
 
   return(ashe)
-
-
 }
 
 
