@@ -100,14 +100,18 @@ read_ashe_file <- function(ashe, file_format) {
 
 ashe_load_data <- function(ashe_files) {
 
-  # Get file format
   file_format <- tools::file_ext(ashe_files)
 
-  # Read in all files in folder
+  # Read in whatever format it comes
   files <- purrr::map2(ashe_files, file_format, read_ashe_file)
 
-  # Convert columns which are sometimes numeric and sometimes character
+  # Lowercase names for consistency
+  files <- lapply(
+    files,
+    function(x) setnames(x, tolower(names(x)))
+  )
 
+  # Convert columns which are sometimes numeric and sometimes character
   convert_to_char <- function(dt) {
     char_num_columns <- c("warea", "wttw", "wla", "harea", "hla", "httw")
 
