@@ -1,6 +1,6 @@
 Package: tidyashe
 Title: Tools for analysts working with ONS ASHE data
-Version: 0.0.1
+Version: 0.0.2
 Authors@R: 
     person("Wojtek", "Klimowicz", , "wojtekklimowicz96@gmail.com", role = c("aut", "cre"))
 Description: Loads and cleans the ASHE .sav files.
