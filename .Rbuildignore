@@ -2,3 +2,4 @@
 ^LICENSE\.md$
 ^inst/ashe.fst$
 ^\.github$
+^\.claude$

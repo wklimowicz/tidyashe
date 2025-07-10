@@ -8,8 +8,7 @@ ashe_compile(
   directory,
   select_columns = NULL,
   filter_files = NULL,
-  set_key = TRUE,
-  save_to_folder = FALSE
+  set_key = TRUE
 )
 }
 \arguments{
@@ -20,8 +19,6 @@ ashe_compile(
 \item{filter_files}{Character vector to filter the file names to take. If NULL, takes all files.}
 
 \item{set_key}{Set key to YEAR/PIDEN?}
-
-\item{save_to_folder}{If TRUE, will save the fst file to the folder indicated by the \code{DATA_DIRECTORY} environment variable. This will enalbe the \code{ashe_load()} function.}
 }
 \description{
 Compile to one file

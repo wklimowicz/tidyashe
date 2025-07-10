@@ -247,6 +247,19 @@ convert_to_factor_if_exists <- function(ashe, column) {
 }
 
 
+# Declare global variables to avoid R CMD check warnings
+utils::globalVariables(c(
+  "..select_columns",
+  "OCCUPATION00_DESCRIPTION", 
+  "OCCUPATION10_DESCRIPTION",
+  "OCCUPATION20_DESCRIPTION",
+  "SIC03_DESCRIPTION",
+  "SIC07_DESCRIPTION", 
+  "occupation",
+  "industry",
+  "piden"
+))
+
 #' Compile to one file
 #'
 #' @import data.table
@@ -255,14 +268,12 @@ convert_to_factor_if_exists <- function(ashe, column) {
 #' @param select_columns Filter columns which are compiled
 #' @param filter_files Character vector to filter the file names to take. If NULL, takes all files.
 #' @param set_key Set key to YEAR/PIDEN?
-#' @param save_to_folder If TRUE, will save the fst file to the folder indicated by the `DATA_DIRECTORY` environment variable. This will enalbe the `ashe_load()` function.
 #' 
 #' @export
 ashe_compile <- function(directory,
                          select_columns = NULL,
                          filter_files = NULL,
-                         set_key = TRUE,
-                         save_to_folder = FALSE) {
+                         set_key = TRUE) {
 
   cli::cli_h1("Loading in ASHE datasets")
 
@@ -301,23 +312,6 @@ ashe_compile <- function(directory,
   # the files arrive means it's useful
   ashe <- unique(ashe, by = duplication_check_variables)
 
-   # If enabled
-  if (save_to_folder == TRUE) {
-
-  cli::cli_alert_info("Saving as fst")
-  save_name <- paste0("ashe_data.fst")
-
-  # If DATA_DIRECTORY environment variable is present, save there.
-  if (Sys.getenv("DATA_DIRECTORY") != "") {
-    fst::write_fst(
-      ashe,
-      paste0(Sys.getenv("DATA_DIRECTORY"), "/", save_name)
-    )
-
-    cli::cli_alert_info("DATA_DIRECTORY environment variable set - saving in folder")
-  }
-
-  }
 
   setcolorder(ashe, c("file", "year", "piden"))
 
