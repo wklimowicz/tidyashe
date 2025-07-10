@@ -5,23 +5,20 @@
 \title{Compile to one file}
 \usage{
 ashe_compile(
-  ashe_folder,
+  directory,
   select_columns = NULL,
   filter_files = NULL,
-  set_key = TRUE,
-  save_to_folder = FALSE
+  set_key = TRUE
 )
 }
 \arguments{
-\item{ashe_folder}{Folder with the ashe fst files}
+\item{directory}{Directory with the ashe fst files}
 
 \item{select_columns}{Filter columns which are compiled}
 
 \item{filter_files}{Character vector to filter the file names to take. If NULL, takes all files.}
 
 \item{set_key}{Set key to YEAR/PIDEN?}
-
-\item{save_to_folder}{If TRUE, will save the fst file to the folder indicated by the \code{DATA_DIRECTORY} environment variable. This will enalbe the \code{ashe_load()} function.}
 }
 \description{
 Compile to one file

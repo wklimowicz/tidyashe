@@ -2,5 +2,4 @@
 
 export(ashe_compile)
 export(ashe_convert)
-export(ashe_load)
 import(data.table)
