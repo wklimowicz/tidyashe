@@ -26,25 +26,25 @@ ashe_convert_file <- function(ashe, new_folder, folder, select_columns) {
 
 #' Convert to fst for faster loading
 #'
-#' @param folder Folder with ASHE .sav files
-#' @param new_folder Name of new folder for files to be converted to
+#' @param directory Directory with ASHE .sav files
+#' @param output_directory Name of new directory for files to be converted to
 #' @param select_columns Vector of columns to limit conversion
 #' @param incremental Only convert files which don't exist in output directory
 #'
 #' @export
-ashe_convert <- function(folder,
-                          new_folder,
+ashe_convert <- function(directory,
+                          output_directory,
                           select_columns = NULL,
                           incremental = TRUE) {
 
   cli::cli_h1(paste0("Converting sav files to fst"))
 
-  files_in_directory <- list.files(folder)
+  files_in_directory <- list.files(directory)
 
 
-  dir.create(file.path(new_folder), showWarnings = FALSE)
+  dir.create(file.path(output_directory), showWarnings = FALSE)
 
-  files <- list.files(folder)
+  files <- list.files(directory)
 
   if (length(files_in_directory) == 0) {
     cli::cli_alert_danger("No Files Found")
@@ -54,8 +54,8 @@ ashe_convert <- function(folder,
 
   if (incremental == TRUE) {
     # Check what files exist and diff
-   exist_in_output <- tools::file_path_sans_ext(list.files(new_folder))
-   exist_in_input <- tools::file_path_sans_ext(list.files(folder))
+   exist_in_output <- tools::file_path_sans_ext(list.files(output_directory))
+   exist_in_input <- tools::file_path_sans_ext(list.files(directory))
    files_in_directory <- setdiff(exist_in_input, exist_in_output)
 
   if (length(files_in_directory) == 0) {
@@ -69,8 +69,8 @@ ashe_convert <- function(folder,
 
 
   invisible(lapply(files_in_directory, ashe_convert_file,
-         new_folder = new_folder,
-         folder = folder,
+         new_folder = output_directory,
+         folder = directory,
          select_columns = select_columns))
 
 }
@@ -251,14 +251,14 @@ convert_to_factor_if_exists <- function(ashe, column) {
 #'
 #' @import data.table
 #' 
-#' @param ashe_folder Folder with the ashe fst files
+#' @param directory Directory with the ashe fst files
 #' @param select_columns Filter columns which are compiled
 #' @param filter_files Character vector to filter the file names to take. If NULL, takes all files.
 #' @param set_key Set key to YEAR/PIDEN?
 #' @param save_to_folder If TRUE, will save the fst file to the folder indicated by the `DATA_DIRECTORY` environment variable. This will enalbe the `ashe_load()` function.
 #' 
 #' @export
-ashe_compile <- function(ashe_folder,
+ashe_compile <- function(directory,
                          select_columns = NULL,
                          filter_files = NULL,
                          set_key = TRUE,
@@ -266,7 +266,7 @@ ashe_compile <- function(ashe_folder,
 
   cli::cli_h1("Loading in ASHE datasets")
 
-  ashe_files <- paste0(ashe_folder, "/", list.files(ashe_folder))
+  ashe_files <- paste0(directory, "/", list.files(directory))
 
   if (!is.null(filter_files)) {
     filter_string <- paste0(filter_files, collapse="|")
@@ -326,40 +326,4 @@ ashe_compile <- function(ashe_folder,
   }
 
   return(ashe)
-}
-
-
-#' Load ASHE from DATA_DIRECTORY folder
-#'
-#' To be able to use one file across many projects,
-#' set an environment variable called `DATA_DIRECTORY` with a folder path,
-#' and use this function to load the data in.
-#'
-#' @param set_key Set key to YEAR/PIDEN?
-#' @param as.data.table Passed to read_fst
-#' @param ... Passed to fst::read_fst
-#'
-#' @export
-ashe_load <- function(set_key = 1, as.data.table = TRUE, ...) {
-
-  # Check if DATA_DIRECTORY environment variable is present
-  if (Sys.getenv("DATA_DIRECTORY") == "") {
-    cli::cli_alert_danger("You don't have the DATA_DIRECTORY environment variable set: see the help for `ashe_compile`.")
-
-    stop()
-  }
-
-  read_name <- "ashe_data.fst"
-
-  ashe <- fst::read_fst(paste0(Sys.getenv("DATA_DIRECTORY"), "/", read_name),
-    as.data.table = as.data.table,
-    ...
-  )
-
-  if(set_key == 1){setkey(ashe, year, piden)}
-
-  setcolorder(ashe, c("year", "piden"))
-
-  return(ashe)
-
 }

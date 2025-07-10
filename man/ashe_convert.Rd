@@ -4,12 +4,17 @@
 \alias{ashe_convert}
 \title{Convert to fst for faster loading}
 \usage{
-ashe_convert(folder, new_folder, select_columns = NULL, incremental = TRUE)
+ashe_convert(
+  directory,
+  output_directory,
+  select_columns = NULL,
+  incremental = TRUE
+)
 }
 \arguments{
-\item{folder}{Folder with ASHE .sav files}
+\item{directory}{Directory with ASHE .sav files}
 
-\item{new_folder}{Name of new folder for files to be converted to}
+\item{output_directory}{Name of new directory for files to be converted to}
 
 \item{select_columns}{Vector of columns to limit conversion}
 

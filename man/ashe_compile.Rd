@@ -5,7 +5,7 @@
 \title{Compile to one file}
 \usage{
 ashe_compile(
-  ashe_folder,
+  directory,
   select_columns = NULL,
   filter_files = NULL,
   set_key = TRUE,
@@ -13,7 +13,7 @@ ashe_compile(
 )
 }
 \arguments{
-\item{ashe_folder}{Folder with the ashe fst files}
+\item{directory}{Directory with the ashe fst files}
 
 \item{select_columns}{Filter columns which are compiled}
 
