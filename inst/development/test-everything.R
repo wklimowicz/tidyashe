@@ -3,7 +3,7 @@ library(tictoc)
 library(ggplot2)
 library(prettyunits)
 
-load_all()
+devtools::load_all()
 
 setwd(here::here())
 
@@ -13,18 +13,18 @@ keep_columns <- c("year", "piden", "thrs", "age", "ft", "sex", "gpay", "sic07",
                   "sic03", "occ00", "occ10", "httw")
 
 ashe_convert(
-  folder = "/mnt/c/Users/wklimowicz/Projects/tidyashe_project_files/ashe_data/",
-  new_folder = Sys.getenv("ASHE_DIRECTORY"),
+  directory = "/mnt/c/Users/wklimowicz/Projects/tidyashe_project_files/ashe_data/",
+  output_directory = Sys.getenv("ASHE_DIRECTORY"),
   incremental = TRUE,
 )
                     # select_columns = keep_columns)
 
 
 # TODO: Add duplicate years argument for generality
-
-ashe <- ashe_compile(Sys.getenv("ASHE_DIRECTORY")
-            # select_columns = keep_columns
-            )
+ashe <- ashe_compile(
+  Sys.getenv("ASHE_DIRECTORY"),
+  filter_files = "ashegb_1997_2011_for_dfe.fst"
+)
 
 x <- fst::read_fst(
   "../data_ashe_fst/ashe_2011_2017_GB_v12.fst",

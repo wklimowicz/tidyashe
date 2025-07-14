@@ -284,6 +284,11 @@ ashe_compile <- function(directory,
     ashe_files <- ashe_files[grepl(filter_string, ashe_files)]
   }
 
+  if (length(ashe_files) == 0) {
+    cli::cli_alert_danger("No files found in directory")
+    invokeRestart("abort")
+  }
+
   ashe <- ashe_load_data(ashe_files)
 
   # Keep columns from select_columns if they exist
